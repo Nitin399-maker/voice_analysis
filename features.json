@@ -1,0 +1,81 @@
+{
+  "features": [
+    {
+      "name": "call_type",
+      "type": "enum",
+      "category": "voice",
+      "allowed_values": ["Product Inquiry", "Complaint", "Technical Issue", "Compliment", "Order Placement"],
+      "description": "Type of call based on the customer's primary purpose"
+    },
+    {
+      "name": "customer_sentiment",
+      "type": "enum",
+      "category": "voice",
+      "allowed_values": ["Neutral", "Angry", "Frustrated", "Happy", "Confused"],
+      "description": "Overall emotional sentiment of the customer during the call"
+    },
+    {
+      "name": "customer_name",
+      "type": "string",
+      "category": "voice",
+      "allowed_values": null,
+      "description": "Name of the customer mentioned during the call"
+    },
+    {
+      "name": "order_number",
+      "type": "string",
+      "category": "voice",
+      "allowed_values": null,
+      "description": "Order number mentioned during the call or 'N/A' if not applicable"
+    },
+    {
+      "name": "product_numbers",
+      "type": "string",
+      "category": "voice",
+      "allowed_values": null,
+      "description": "Product numbers mentioned during the call, separated by ' & ' if multiple"
+    },
+    {
+      "name": "has_music",
+      "type": "boolean",
+      "category": "music",
+      "allowed_values": [true, false],
+      "description": "Whether music is present in the audio"
+    },
+    {
+      "name": "genre_detection",
+      "type": "enum",
+      "category": "music",
+      "allowed_values": ["rock", "pop", "classical", "jazz", "electronic", "hip-hop", "country", "blues", "reggae", "folk", "unknown", null],
+      "description": "Detected music genre"
+    },
+    {
+      "name": "instrument_identification",
+      "type": "list[str]",
+      "category": "music",
+      "allowed_values": ["guitar", "piano", "drums", "violin", "bass", "saxophone", "trumpet", "flute", "vocals", "synthesizer"],
+      "description": "List of detected instruments"
+    },
+    {
+      "name": "tempo_classification",
+      "type": "enum",
+      "category": "music",
+      "allowed_values": ["very_slow", "slow", "moderate", "fast", "very_fast", null],
+      "description": "Music tempo classification"
+    },
+    {
+      "name": "mood_of_music",
+      "type": "enum",
+      "category": "music",
+      "allowed_values": ["energetic", "calm", "melancholic", "uplifting", "aggressive", "romantic", "mysterious", null],
+      "description": "Overall mood of the music"
+    },
+    {
+      "name": "music_volume",
+      "type": "enum",
+      "category": "music",
+      "allowed_values": ["soft", "normal", "loud", null],
+      "description": "Music volume level"
+    }
+  ]
+}

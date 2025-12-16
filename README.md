@@ -1,64 +1,25 @@
-# Voice Analysis Evaluation Pipeline
+# 🎙️ Voice Analysis Evaluation Pipeline
 
 ## Overview
-
 This project evaluates **Gemini / OpenRouter audio understanding** by:
 
-1. Generating synthetic audio using **OpenAI TTS**
-2. Collecting real call samples (YouTube, TTS, etc.)
-3. Labelling audio features manually (emotion, gender, noise…)
-4. Running Gemini analysis on each audio file
-5. Comparing model predictions vs. ground truth
-6. Producing metrics & reports
-
-This allows rapid testing of new attributes such as:
-
-- Singing detection  
-- Stutter / stammer  
-- Background conversations  
-- Coughing  
-- Emotion intensity  
-- Environment type (coffee shop, classroom, office)
+1. Running Gemini analysis on each audio file  
+2. Comparing model predictions against ground truth labels
 
 ---
 
 ## Prerequisites
 
 ### Install Python 3.10+
+Verify your Python version:
+
 ```bash
 python --version
 ```
 
-### Create a Virtual Environment
-```bash
-python -m venv .venv
-```
-
-Activate:
-
-**Windows PowerShell**
-```powershell
-.\.venv\Scripts\Activate
-```
-
-**macOS/Linux**
-```bash
-source .venv/bin/activate
-```
-
-### Install Dependencies
-```
-pip install openai requests pandas soundfile
-```
-
 ### Export API Keys
 
-**OpenAI TTS**
-```powershell
-$env:OPENAI_API_KEY="your-openai-key-here"
-```
-
-**OpenRouter**
+#### OpenRouter API Key
 ```powershell
 $env:OPENROUTER_API_KEY="your-openrouter-key-here"
 ```
@@ -67,88 +28,39 @@ $env:OPENROUTER_API_KEY="your-openrouter-key-here"
 
 ## Project Structure
 
-```
+```text
 voice_analysis/
-├── config/
-│   ├── features.json
-│   ├── prompt.txt
+│
 ├── data/
-│   └── raw/
-├── labels/
-│   └── labels.jsonl
-├── reports/
-│   ├── results_raw.csv
-│   └── metrics_summary.csv
-└── scripts/
-    ├── generate_tts.py
-    ├── init_labels_from_raw.py
-    ├── run_experiments.py
-    ├── compute_metrics.py
+│   └── raw/                    # Input .opus audio files
+│
+├── features.json               # Feature schema definitions
+├── labels.json                 # Ground truth labels for evaluation
+├── run_audio_eval.py           # Main evaluation script
+├── results_gemini.csv          # Output results (generated)
+└── README.md                   # Project documentation
 ```
 
----
-
-## Generate Synthetic Audio (TTS)
-
-### Basic
-```powershell
-python scripts/generate_tts.py "Hello, how may I help you today?" greeting_1.mp3
-```
-
-### With Voice + Speed
-```powershell
-python scripts/generate_tts.py "I already called three times—why is this not fixed?" angry_fast_1.mp3 coral 1.4
-```
-
----
-
-## Auto-Generate Label Entries
-```powershell
-python scripts/init_labels_from_raw.py
-```
-
-Edit `labels.jsonl` and manually fill ground-truth labels.
-
----
 
 ## Run Gemini Analysis
-```powershell
-python scripts/run_experiments.py
+
+### Run with Default Gemini Model
+```bash
+python run_audio_eval.py
 ```
 
-Outputs → `reports/results_raw.csv`
-
----
-
-## Compute Metrics
-```powershell
-python scripts/compute_metrics.py
+### Run with a Specific Model Variant
+```bash
+python run_audio_eval.py --variant gemini-3-pro-preview
 ```
 
-Outputs → `reports/metrics_summary.csv`
+```bash
+python run_audio_eval.py --variant gemini-2.5-flash
+```
 
----
+### Output
+Results will be saved to:
 
-## Workflow Summary
-
-| Step | Command |
-|------|---------|
-| Generate TTS audio | `python scripts/generate_tts.py` |
-| Detect new files | `python scripts/init_labels_from_raw.py` |
-| Label manually | edit `labels.jsonl` |
-| Run analysis | `python scripts/run_experiments.py` |
-| Compute metrics | `python scripts/compute_metrics.py` |
-
----
-
-## Future Extensions
-To add a new feature:
-
-1. Add to `config/features.json`  
-2. Update `prompt.txt`  
-3. Generate new TTS samples  
-4. Label them  
-5. Run pipeline again  
-
----
-
+```text
+results_gemini.csv
+```
